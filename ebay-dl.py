@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import re
+import csv
 
 
 def parse_itemssold(text):
@@ -73,6 +74,7 @@ def parse_price(text):
 
 parser = argparse.ArgumentParser(description= 'Download information form ebay and convert to JSON.')
 parser.add_argument('search_term')
+parser.add_argument('--csv', action='store_true')
 args = parser.parse_args()
 
 print('args.search_term=',args.search_term)
@@ -81,7 +83,7 @@ print('args.search_term=',args.search_term)
 items = []
 
 
-for page_number in range (1,10):
+for page_number in range (1,11):
    #build url
     url = 'https://www.ebay.com/sch/i.html?_nkw=' + args.search_term + '&_sacat=0&_from=R40&_pgn=' + str(page_number)
     print('url=', url)
@@ -154,7 +156,15 @@ for page_number in range (1,10):
     print('len(tags_items)=',len(tags_items))
     print('len(items)=',len(items))
 
-
-filename = args.search_term+'.json'
-with open(filename, 'w', encoding='ascii') as f:
-    f.write(json.dumps(items))
+if args.csv:
+    filename = args.search_term +'.csv'
+    with open(filename, 'w', newline='', encoding='utf-8')as csvfile:
+        fielednames = ['name','price','status','shipping','free_returns','items_sold']
+        writer = csv.DictWriter(csvfile, fieldnames=fielednames)
+        writer.writeheader()
+        for item in items:
+            writer.writerow(item)
+else:
+    filename = args.search_term+'.json'
+    with open(filename, 'w', encoding='ascii') as f:
+        f.write(json.dumps(items))
