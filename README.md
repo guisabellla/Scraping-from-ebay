@@ -16,11 +16,14 @@ The extracted items that are used to analyze each product includes:
 
 ## Instruction running the ebay-dl.py file
 
+I searched for "bag women", "bowl", and "jewelry". These are the commands that I use to generate the 3 json files in my repository:
+```
+python3 ebay-dl.py bowl
+python3 ebay-dl.py jewelry
+python3 ebay-dl.py bag+women
+```
 
+### Course link
 
+This project is produced under the instruction of [CMC-CSCI040/Project_03](https://github.com/mikeizbicki/cmc-csci040/tree/2025spring/project_03_webscraping).
 
-    what your ebay-dl.py file does
-
-    how to run your ebay-dl.py file, using markdown code block(s) (and not inline code annotations) to show the exact commands that should be run to generate the 3 json files in your repo
-
-    a link to the course project
